@@ -7,14 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     public function user()
-   {
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
-      return $this->hasOne('App\Models\User', 'id', 'user_id');
-   }
-
-     public function product()
-   {
-
-      return $this->hasOne('App\Models\Product', 'id', 'product_id');
-   }
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }

@@ -6,15 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-      protected $fillable = [
-        'cat_title',
-       
-    ];
+    /**
+     * Mass assignable attributes.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = ['cat_title'];
 
+    /**
+     * Get all products under this category.
+     */
     public function products()
-{
-    return $this->hasMany(Product::class, 'category_id');
+    {
+        return $this->hasMany(
+            Product::class,
+            'category_id'
+        );
+    }
 }
-
-}
-

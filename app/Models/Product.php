@@ -12,12 +12,14 @@ class Product extends Model
         'price',
         'quantity',
         'category_id',
-        'image',
+        'image'
     ];
 
     public function category()
-{
-    return $this->belongsTo(Category::class, 'category_id');
-}
-
+    {
+        return $this->belongsTo(
+            Category::class,
+            'category_id'
+        );
+    }
 }

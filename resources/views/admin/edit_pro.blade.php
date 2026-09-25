@@ -1,149 +1,222 @@
+```php
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     @include('admin.css')
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1f1f2e;
-            color: #fff;
+            background: #1f1f2e;
+            color: #ffffff;
         }
 
         .page-header h1 {
             text-align: center;
-            margin-bottom: 30px;
             font-size: 2rem;
+            margin-bottom: 30px;
             color: #f8f9fa;
         }
 
-        form {
+        .product-form {
+            width: 100%;
             max-width: 600px;
-            margin: auto;
-            background-color: #2d2f3a;
+            margin: 0 auto;
             padding: 30px;
+            background: #2d2f3a;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .5);
         }
 
-        form div {
+        .form-group {
             margin-bottom: 20px;
         }
 
-        form label {
+        .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #f1f1f1;
         }
 
-        form input[type="text"],
-        form input[type="file"],
-        form select {
+        .form-control,
+        .product-form select {
             width: 100%;
             padding: 12px 15px;
-            border-radius: 8px;
             border: 1px solid #444;
-            background-color: #3a3b47;
+            border-radius: 8px;
+            background: #3a3b47;
             color: #fff;
             font-size: 1rem;
-            transition: border 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
         }
 
-        form input[type="text"]:focus,
-        form select:focus,
-        form input[type="file"]:focus {
+        .form-control:focus,
+        .product-form select:focus {
             outline: none;
             border-color: #5b67f2;
-            box-shadow: 0 0 8px rgba(91, 103, 242, 0.7);
+            box-shadow: 0 0 8px rgba(91, 103, 242, .7);
         }
 
-        form input[type="submit"] {
-            background-color: #550a28ff;
+        .current-image {
+            display: block;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .submit-btn {
+            background: #550a28;
             color: #fff;
             padding: 12px 25px;
-            font-size: 1rem;
             border: none;
             border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            transition: .3s;
         }
 
-        form input[type="submit"]:hover {
-            background-color: #4953d6;
+        .submit-btn:hover {
+            background: #4953d6;
             transform: translateY(-2px);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            form {
+            .product-form {
                 padding: 20px;
             }
         }
     </style>
 </head>
+
 <body>
+
     @include('admin.header')
+
     <div class="d-flex align-items-stretch">
+
         @include('admin.slidebar')
+
         <div class="page-content">
             <div class="page-header">
+
                 <div class="container-fluid">
+
                     <h1>Edit Product Details</h1>
 
-                    <form action="{{url('update_product_details', $data->id)}}" method="POST" enctype="multipart/form-data">
+                    <form
+                        class="product-form"
+                        action="{{ url('update_product_details', $data->id) }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
 
-                    @csrf  @method('PUT')
-                        <div>
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
                             <label for="title">Enter Product Name</label>
-                            <input type="text" name="title" id="title" value="{{$data->title}}">
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="title"
+                                name="title"
+                                value="{{ $data->title }}"
+                            >
                         </div>
 
-                        <div>
+                        <div class="form-group">
                             <label for="description">Enter Product Description</label>
-                            <input type="text" name="description" id="description"  value="{{$data->description}}">
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="description"
+                                name="description"
+                                value="{{ $data->description }}"
+                            >
                         </div>
 
-                        <div>
+                        <div class="form-group">
                             <label for="price">Enter Product Price</label>
-                            <input type="text" name="price" id="price"  value="{{$data->price}}">
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="price"
+                                name="price"
+                                value="{{ $data->price }}"
+                            >
                         </div>
 
-                        <div>
+                        <div class="form-group">
                             <label for="quantity">Enter Product Quantity</label>
-                            <input type="text" name="qty" id="quantity"  value="{{$data->quantity}}">
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="quantity"
+                                name="qty"
+                                value="{{ $data->quantity }}"
+                            >
                         </div>
 
-                           <label for="category">Category</label>
-<select name="category" id="category" > 
-    <option value="">Select Category</option>
-    @foreach($category as $cat)
-        <option value="{{ $cat->id }}" 
-            {{ $data->category_id == $cat->id ? 'selected' : '' }}>
-            {{ $cat->cat_title }}
-        </option>
-    @endforeach
-</select>
+                        <div class="form-group">
+                            <label for="category">Category</label>
 
-                                
-                        
-                        <div>
-                            <label for="image">Current Product Image</label>
-                           <img src="{{ asset('products/'.$data->image) }}" alt=""  width="120">
+                            <select name="category" id="category">
+                                <option value="">Select Category</option>
+
+                                @foreach ($category as $item)
+                                    <option
+                                        value="{{ $item->id }}"
+                                        @if ($data->category_id == $item->id)
+                                            selected
+                                        @endif
+                                    >
+                                        {{ $item->cat_title }}
+                                    </option>
+                                @endforeach
+
+                            </select>
                         </div>
-                        <div>
+
+                        <div class="form-group">
+                            <label>Current Product Image</label>
+
+                            <img
+                                class="current-image"
+                                src="{{ asset('products/' . $data->image) }}"
+                                alt="Product Image"
+                                width="120"
+                            >
+                        </div>
+
+                        <div class="form-group">
                             <label for="image">Enter Product Image</label>
-                            <input type="file" name="image" id="image">
+
+                            <input
+                                class="form-control"
+                                type="file"
+                                name="image"
+                                id="image"
+                            >
                         </div>
 
-                        <div>
-                            <input type="submit" value="Add Product Details">
+                        <div class="form-group">
+                            <input
+                                class="submit-btn"
+                                type="submit"
+                                value="Update Product Details"
+                            >
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 
     @include('admin.footer')
+
 </body>
 </html>
+```

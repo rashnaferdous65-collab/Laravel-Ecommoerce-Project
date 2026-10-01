@@ -67,68 +67,87 @@
             </div>
             <!-- Tasks end-->
             <!-- Megamenu-->
-            <div class="list-inline-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Mega <i class="fa fa-ellipsis-v"></i></a>
-              <div class="dropdown-menu megamenu">
-                <div class="row">
-                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
+             ```blade
+<div class="list-inline-item dropdown menu-large">
+    <a href="#" class="nav-link" data-toggle="dropdown">
+        Mega <i class="fa fa-ellipsis-v"></i>
+    </a>
+
+    <div class="dropdown-menu megamenu">
+
+        <div class="row">
+
+            @php
+                $menuItems = [
+                    'Elements Heading',
+                    'Elements Heading',
+                    'Elements Heading',
+                    'Elements Heading'
+                ];
+
+                $links = [
+                    'Lorem ipsum dolor',
+                    'Sed ut perspiciatis',
+                    'Voluptatum deleniti',
+                    'At vero eos',
+                    'Consectetur adipiscing',
+                    'Duis aute irure',
+                    'Necessitatibus saepe',
+                    'Maiores alias'
+                ];
+            @endphp
+
+            @foreach($menuItems as $heading)
+
+                <div class="col-lg-3 col-md-6">
+                    <strong class="text-uppercase">
+                        {{ $heading }}
+                    </strong>
+
                     <ul class="list-unstyled mb-3">
-                      <li><a href="#">Lorem ipsum dolor</a></li>
-                      <li><a href="#">Sed ut perspiciatis</a></li>
-                      <li><a href="#">Voluptatum deleniti</a></li>
-                      <li><a href="#">At vero eos</a></li>
-                      <li><a href="#">Consectetur adipiscing</a></li>
-                      <li><a href="#">Duis aute irure</a></li>
-                      <li><a href="#">Necessitatibus saepe</a></li>
-                      <li><a href="#">Maiores alias</a></li>
+                        @foreach($links as $link)
+                            <li>
+                                <a href="#">{{ $link }}</a>
+                            </li>
+                        @endforeach
                     </ul>
-                  </div>
-                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
-                    <ul class="list-unstyled mb-3">
-                      <li><a href="#">Lorem ipsum dolor</a></li>
-                      <li><a href="#">Sed ut perspiciatis</a></li>
-                      <li><a href="#">Voluptatum deleniti</a></li>
-                      <li><a href="#">At vero eos</a></li>
-                      <li><a href="#">Consectetur adipiscing</a></li>
-                      <li><a href="#">Duis aute irure</a></li>
-                      <li><a href="#">Necessitatibus saepe</a></li>
-                      <li><a href="#">Maiores alias</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
-                    <ul class="list-unstyled mb-3">
-                      <li><a href="#">Lorem ipsum dolor</a></li>
-                      <li><a href="#">Sed ut perspiciatis</a></li>
-                      <li><a href="#">Voluptatum deleniti</a></li>
-                      <li><a href="#">At vero eos</a></li>
-                      <li><a href="#">Consectetur adipiscing</a></li>
-                      <li><a href="#">Duis aute irure</a></li>
-                      <li><a href="#">Necessitatibus saepe</a></li>
-                      <li><a href="#">Maiores alias</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
-                    <ul class="list-unstyled mb-3">
-                      <li><a href="#">Lorem ipsum dolor</a></li>
-                      <li><a href="#">Sed ut perspiciatis</a></li>
-                      <li><a href="#">Voluptatum deleniti</a></li>
-                      <li><a href="#">At vero eos</a></li>
-                      <li><a href="#">Consectetur adipiscing</a></li>
-                      <li><a href="#">Duis aute irure</a></li>
-                      <li><a href="#">Necessitatibus saepe</a></li>
-                      <li><a href="#">Maiores alias</a></li>
-                    </ul>
-                  </div>
                 </div>
-                <div class="row megamenu-buttons text-center">
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-1"><i class="fa fa-clock-o"></i><strong>Demo 1</strong></a></div>
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-2"><i class="fa fa-clock-o"></i><strong>Demo 2</strong></a></div>
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-3"><i class="fa fa-clock-o"></i><strong>Demo 3</strong></a></div>
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-4"><i class="fa fa-clock-o"></i><strong>Demo 4</strong></a></div>
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link bg-danger"><i class="fa fa-clock-o"></i><strong>Demo 5</strong></a></div>
-                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link bg-info"><i class="fa fa-clock-o"></i><strong>Demo 6</strong></a></div>
+
+            @endforeach
+
+        </div>
+
+        @php
+            $demos = [
+                ['title' => 'Demo 1', 'class' => 'dashbg-1'],
+                ['title' => 'Demo 2', 'class' => 'dashbg-2'],
+                ['title' => 'Demo 3', 'class' => 'dashbg-3'],
+                ['title' => 'Demo 4', 'class' => 'dashbg-4'],
+                ['title' => 'Demo 5', 'class' => 'bg-danger'],
+                ['title' => 'Demo 6', 'class' => 'bg-info']
+            ];
+        @endphp
+
+        <div class="row megamenu-buttons text-center">
+
+            @foreach($demos as $demo)
+                <div class="col-lg-2 col-md-4">
+                    <a href="#"
+                       class="d-block megamenu-button-link {{ $demo['class'] }}">
+
+                        <i class="fa fa-clock-o"></i>
+                        <strong>{{ $demo['title'] }}</strong>
+
+                    </a>
                 </div>
-              </div>
-            </div>
+            @endforeach
+
+        </div>
+
+    </div>
+</div>
+```
+
             <!-- Megamenu end     -->
             <!-- Languages dropdown    -->
             <div class="list-inline-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="{{asset('admin_css/img/flags/16/GB.png')}}" alt="English"><span class="d-none d-sm-inline-block">English</span></a>

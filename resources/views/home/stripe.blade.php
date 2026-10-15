@@ -54,36 +54,49 @@
 </body>
      
 <script src="https://js.stripe.com/v3/"></script>
-<script type="text/javascript">
-  
-    var stripe = Stripe('{{ env('STRIPE_KEY') }}')
-    var elements = stripe.elements();
-    var cardElement = elements.create('card');
-    cardElement.mount('#card-element');
-  
-    /*------------------------------------------
-    --------------------------------------------
-    Create Token Code
-    --------------------------------------------
-    --------------------------------------------*/
-    function createToken() {
-        document.getElementById("pay-btn").disabled = true;
-        stripe.createToken(cardElement).then(function(result) {
-   
-            if(typeof result.error != 'undefined') {
-                document.getElementById("pay-btn").disabled = false;
-                alert(result.error.message);
+```html
+<!-- Stripe Payment Start -->
+<script>
+    const stripe = Stripe(@json(env('STRIPE_KEY')));
+    const elements = stripe.elements();
+    const card = elements.create('card');
+
+    card.mount('#card-element');
+
+    async function createToken() {
+        const payButton = document.getElementById('pay-btn');
+        const tokenInput = document.getElementById('stripe-token-id');
+        const checkoutForm = document.getElementById('checkout-form');
+
+        payButton.disabled = true;
+
+        try {
+            const response = await stripe.createToken(card);
+
+            if (response.error) {
+                alert(response.error.message);
+                return;
             }
-  
-            /* creating token success */
-            if(typeof result.token != 'undefined') {
-                document.getElementById("stripe-token-id").value = result.token.id;
-                document.getElementById('checkout-form').submit();
+
+            if (!response.token) {
+                alert('Unable to process your card. Please try again.');
+                return;
             }
-        });
+
+            tokenInput.value = response.token.id;
+            checkoutForm.submit();
+
+        } catch (error) {
+            alert('Payment could not be processed. Please try again.');
+            console.error(error);
+
+        } finally {
+            payButton.disabled = false;
+        }
     }
 </script>
- 
+<!-- Stripe Payment End -->
+```
 </html>
 
 

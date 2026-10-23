@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-@include('home.css')
+@php
+    echo view('home.css')->render();
+@endphp
 
 <body>
- 
-@include('home.header')
- 
 
+    @php
+        echo view('home.header')->render();
+    @endphp
 
-  
-@include('home.shop')
+    <main>
+        @php
+            echo view('home.shop')->render();
+        @endphp
+    </main>
 
-
-
-
-
-@include('home.footer')
+    @php
+        echo view('home.footer')->render();
+    @endphp
 
 </body>
 
